@@ -8,10 +8,21 @@
 
         <link rel="stylesheet" href="dist/reset.css">
         <link rel="stylesheet" href="dist/reveal.css">
-        <link rel="stylesheet" href="dist/theme/black.css">
+        <link rel="stylesheet" href="dist/theme/white.css">
 
         <!-- Theme used for syntax highlighted code -->
         <link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+        <!-- Customization -->
+        <style>
+        section p.field_title {
+        }
+        section ol li {
+            font-size: 50%;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        </style>
     </head>
     <body>
         <div class="reveal">
@@ -26,22 +37,17 @@ $slides_html
         <script src="plugin/notes/notes.js"></script>
         <script src="plugin/markdown/markdown.js"></script>
         <script src="plugin/highlight/highlight.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
         <script>
             // More info about initialization & config:
             // - https://revealjs.com/initialization/
             // - https://revealjs.com/config/
             Reveal.initialize({
                 hash: true,
+                slideNumber: true,
 
                 // Learn about plugins: https://revealjs.com/plugins/
                 plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
             });
-        </script>
-        <script>
-
-$slides_js
-
         </script>
     </body>
 </html>

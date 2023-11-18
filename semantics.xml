@@ -1,0 +1,37 @@
+<semantics>
+    <skip fields="1" />
+    <chart fields="2,3">
+        <item key="1" color="#0f0">Very good</item>
+        <item key="2" color="#afa">Good</item>
+        <item key="3" color="#ffa">Undecided</item>
+        <item key="4" color="#faa">Bad</item>
+        <item key="5" color="#f00">Very bad</item>
+    </chart>
+    <chart fields="6">
+        <item key="1" color="#0f0">Enough support</item>
+        <item key="2" color="#afa">Mostly enough</item>
+        <item key="3" color="#ffa">Undecided</item>
+        <item key="4" color="#faa">Mostly insufficient</item>
+        <item key="5" color="#f00">Insufficient support</item>
+    </chart>
+    <chart fields="9,13,17,20">
+        <item key="1" color="#0f0">Very interesting</item>
+        <item key="2" color="#afa">Interesting</item>
+        <item key="3" color="#ffa">Undecided</item>
+        <item key="4" color="#faa">Irrelevant</item>
+        <item key="5" color="#f00">Very irrelevant</item>
+    </chart>
+    <chart fields="10,14,15,18,21">
+        <item key="1" color="#ffa">Too easy</item>
+        <item key="2" color="#afa">Easy</item>
+        <item key="3" color="#0f0">About right</item>
+        <item key="4" color="#faa">Difficult</item>
+        <item key="5" color="#f00">Too difficult</item>
+    </chart>
+
+    <topic fields="2-4">Datacamp</topic>
+    <topic fields="5-11">Lab Session 1</topic>
+    <topic fields="12-15">Lab Session 2</topic>
+    <topic fields="16-18">Lab Session 3</topic>
+    <topic fields="19-24">Lab Session 4</topic>
+</semantics>
