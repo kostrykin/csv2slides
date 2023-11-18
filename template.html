@@ -17,7 +17,7 @@
         <div class="reveal">
             <div class="slides">
 
-$slides
+$slides_html
 
             </div>
         </div>
@@ -26,6 +26,7 @@ $slides
         <script src="plugin/notes/notes.js"></script>
         <script src="plugin/markdown/markdown.js"></script>
         <script src="plugin/highlight/highlight.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
         <script>
             // More info about initialization & config:
             // - https://revealjs.com/initialization/
@@ -36,6 +37,11 @@ $slides
                 // Learn about plugins: https://revealjs.com/plugins/
                 plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
             });
+        </script>
+        <script>
+
+$slides_js
+
         </script>
     </body>
 </html>
