@@ -1,6 +1,6 @@
 # csv2slides
 
-Converts your CSV, such as the feedback data from Google Forms, into visually pleasing slides.
+Converts your CSV, such as the feedback data from Google Forms, into visually pleasing slides (html).
 
 Ppowered by [reveal.js](https://revealjs.com).
 
