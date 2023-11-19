@@ -14,6 +14,9 @@ jobs:
       - name: Initialize
         uses: actions/checkout@v2
 
+      - name: Install build dependencies
+        run: apt install python3-matplotlib
+
       - name: Build
         run: mkdir build && python build_slides.py build
 
