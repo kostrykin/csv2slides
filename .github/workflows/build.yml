@@ -20,8 +20,8 @@ jobs:
         run: sudo apt-get install -y python3-matplotlib
 
       - name: Build
-        #run: mkdir build && python build_slides.py build && rm -rf build/.git
-        run: mkdir build && echo "test" >> build/test.html
+        run: mkdir build && python build_slides.py build && rm -rf build/.git
+        #run: mkdir build && echo "test" >> build/test.html
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
