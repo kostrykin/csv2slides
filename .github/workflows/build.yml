@@ -20,7 +20,7 @@ jobs:
         run: sudo apt-get install -y python3-matplotlib
 
       - name: Build
-        run: mkdir build && python build_slides.py build && rm -rf build/.git
+        run: mkdir -p build/${{ github.ref_name }} && python build_slides.py build/${{ github.ref_name }} && rm -rf build/${{ github.ref_name }}/.git
 
 #      - name: Upload build artifact
 #        uses: actions/upload-artifact@v3
@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           name: ${{ github.ref_name }}
-          path: build/*
+          path: build/${{ github.ref_name }}
 
   deploy:
     needs: build
