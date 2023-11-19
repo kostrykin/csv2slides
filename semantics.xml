@@ -7,6 +7,7 @@
         <item key="4" color="#faa">Bad</item>
         <item key="5" color="#f00">Very bad</item>
     </chart>
+    <chart fields="4,7" />
     <chart fields="6">
         <item key="1" color="#0f0">Enough support</item>
         <item key="2" color="#afa">Mostly enough</item>
@@ -14,14 +15,14 @@
         <item key="4" color="#faa">Mostly insufficient</item>
         <item key="5" color="#f00">Insufficient support</item>
     </chart>
-    <chart fields="9,13,17,20">
+    <chart fields="9,13,17,20,23">
         <item key="1" color="#0f0">Very interesting</item>
         <item key="2" color="#afa">Interesting</item>
         <item key="3" color="#ffa">Undecided</item>
         <item key="4" color="#faa">Irrelevant</item>
         <item key="5" color="#f00">Very irrelevant</item>
     </chart>
-    <chart fields="10,14,15,18,21">
+    <chart fields="10,11,14,15,18,21,24">
         <item key="1" color="#ffa">Too easy</item>
         <item key="2" color="#afa">Easy</item>
         <item key="3" color="#0f0">About right</item>

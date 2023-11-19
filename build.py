@@ -59,24 +59,30 @@ class Data:
         return self.rows[0][pos]
 
     def get_field_type(self, pos):
+        undecided = True
         for row in self.rows[1:]:
-            if pos >= len(row):
+            value = row[pos] if pos < len(row) else ''
+            if len(value) == 0:
+                continue
+            if re.match(r'^[0-9]+$', value):
+                undecided = False
+            else:
                 return str
-            value = row[pos]
-            if not re.match(r'^[0-9]+$', value):
-                return str
-        return int
+        return str if undecided else int
 
     def get_field_values(self, pos):
         field_type = self.get_field_type(pos)
-        return [field_type(row[pos]) for row in self.rows[1:]]
+        return [field_type(row[pos]) for row in self.rows[1:] if len(row[pos]) > 0]
 
     def get_field_semantic(self, pos):
-        if pos + 1 in self.semantics:
-            return self.semantics[pos + 1]
-        elif self.get_field_type(pos) is int:
-            values = self.get_field_values(pos)
-            return {'type': 'chart', 'legend': [{'key': value, 'label': value, 'color': '#ccc'} for value in values]}
+        semantic = self.semantics[pos + 1] if pos + 1 in self.semantics else None
+        if (semantic is None and self.get_field_type(pos) is int) or (semantic is not None and semantic['type'] == 'chart' and len(semantic.get('legend', [])) == 0):
+            values = list(frozenset(self.get_field_values(pos)))
+            colors = [('#dfdfdf' if value_idx % 2 == 0 else '#efefef') for value_idx, _ in enumerate(values)]
+            if len(colors) % 2 == 1: colors[-1] = '#cfcfcf'
+            return {'type': 'chart', 'legend': [{'key': value, 'label': str(value), 'color': color} for value, color in zip(values, colors)]}
+        elif semantic is not None:
+            return semantic
         else:
             return {'type': 'text'}
 
@@ -106,7 +112,7 @@ class Data:
             frequency = sum((str(value) == str(legend_item['key']) for value in values))
             if frequency == 0: continue
             frequencies.append(frequency)
-            labels.append(legend_item['label'])
+            labels.append(legend_item['label'] + f' ({frequency})')
             colors.append(legend_item['color'])
         assert len(frequencies) > 0, f'pos: {pos}, values: {values}, keys: {[legend_item["key"] for legend_item in semantic["legend"]]}'
         fig = plt.figure()
