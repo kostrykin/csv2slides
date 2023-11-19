@@ -143,7 +143,7 @@ class Slides:
             if element.tagName == 'slide':
                 if element.firstChild is not None:
                     slide_template = string.Template(element.firstChild.data)
-                    self.slides.append({'type': 'raw', 'content': slide_template.substitute(dict(title=self.title, rows=len(data.rows), rawdata_url=csv_raw))})
+                    self.slides.append({'type': 'raw', 'content': slide_template.substitute(dict(title=self.title, rows=len(data.rows) - 1, rawdata_url=csv_raw))})
                 else:
                     slide = {'type': 'field', 'field': int(element.attributes['field'].value) - 1, 'topic': current_topic}
                     if 'values' in element.attributes:
