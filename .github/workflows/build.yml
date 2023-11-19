@@ -21,10 +21,10 @@ jobs:
         run: sudo apt-get install -y python3-matplotlib
 
       - name: Build
-        run: mkdir -p build/${{ github.ref_name }} && python build_slides.py build/${{ github.ref_name }} && rm -rf build/${{ github.ref_name }}/.git
+        run: mkdir build && python build_slides.py build && rm -rf build/.git
 
       - name: Upload build artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ github.ref_name }}
           path: build
@@ -32,25 +32,24 @@ jobs:
   deploy:
     needs: build
 
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
+      contents: write
 
-    # Deploy to the github-pages environment
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    # Specify runner + deployment step
     runs-on: ubuntu-latest
     steps:
+
+      - name: Initialize
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
 
       - name: Download build artifact
         uses: actions/download-artifact@v3
 
+      - name: Build deployment index
+        run: python build_index.py
+
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          artifact_name: ${{ github.ref_name }}
+          commit_message: deploys ${{ github.ref_name }}
