@@ -174,10 +174,10 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('build_directory', type=str)
-    parser.add_argument('--csv_input', type=str, default='data.csv')
+    parser.add_argument('--csv_input', type=str, default='data.csv', help='Path of the input CSV data.')
     parser.add_argument('--csv_raw', type=str, default='data.csv', help='Name of the file used to deploy the raw CSV data.')
-    parser.add_argument('--semantics', type=str, default='semantics.xml')
-    parser.add_argument('--slides', type=str, default='slides.xml')
+    parser.add_argument('--semantics', type=str, default='semantics.xml', help='Semantic definitions for the CSV data.')
+    parser.add_argument('--slides', type=str, default='slides.xml', help='Definition of the slides.')
     args = parser.parse_args()
     
     data = Data(args.csv_input, args.semantics)
