@@ -41,12 +41,14 @@ class Data:
         self.semantics = dict()
         semantics = minidom.parse(semantics_filepath).getElementsByTagName('semantics')[0]
         for chart_semantic in semantics.getElementsByTagName('chart'):
-            legend = list()
+            legend, translations = list(), dict()
             for item in chart_semantic.getElementsByTagName('item'):
                 legend.append({'key': item.attributes['key'].value, 'label': item.firstChild.data, 'color': item.attributes['color'].value})
+            for translation in chart_semantic.getElementsByTagName('translate'):
+                translations[translation.attributes['from'].value] = translation.firstChild.data
             for pos in parse_range(chart_semantic.attributes['fields'].value):
                 assert pos not in self.semantics, f'Duplicate semantics for field {pos}'
-                self.semantics[pos] = {'type': 'chart', 'legend': legend}
+                self.semantics[pos] = {'type': 'chart', 'legend': legend, 'explicit-legend': len(legend) > 0, 'translations': translations}
 
     def __len__(self):
         return len(self.rows[0])
@@ -77,7 +79,7 @@ class Data:
             values = list(frozenset(self.get_field_values(pos)))
             colors = [('#dfdfdf' if value_idx % 2 == 0 else '#efefef') for value_idx, _ in enumerate(values)]
             if len(colors) % 2 == 1: colors[-1] = '#cfcfcf'
-            return {'type': 'chart', 'legend': [{'key': value, 'label': str(value), 'color': color} for value, color in zip(values, colors)]}
+            return {'type': 'chart', 'legend': [{'key': value, 'label': str(value), 'color': color} for value, color in zip(values, colors)], 'explicit-legend': False, 'translations': semantic.get('translations', dict())}
         elif semantic is not None:
             return semantic
         else:
@@ -92,7 +94,8 @@ class Data:
             assert semantic['type'] == 'text', semantic['type']
             which_values = parse_range(which_values, len(values))
         if semantic['type'] == 'chart':
-            content = f'<img src="chart{pos}.svg">'
+            options = ('<p><b>Options:</b> ' + ', '.join(legend_item['label'] for legend_item in semantic['legend']) + '</p>') if semantic['explicit-legend'] else ''
+            content = f'{options}<img src="chart{pos}.svg">'
         elif semantic['type'] == 'text':
             nonempty_values = [value for value in values if len(str(value)) > 0]
             content = f'<p><b>{len(values)} answer(s)</b></p>' + f'<ol start="{1 + offset}">' + ''.join([f'<li>{str(value)}</li>' for value_idx, value in enumerate(nonempty_values) if value_idx in which_values]) + '</ol>'
@@ -111,7 +114,8 @@ class Data:
             frequency = sum((str(value) == str(legend_item['key']) for value in values))
             if frequency == 0: continue
             frequencies.append(frequency)
-            labels.append(legend_item['label'] + f' ({frequency})')
+            label = legend_item['label']
+            labels.append(semantic['translations'].get(label, label) + f' ({frequency}x)')
             colors.append(legend_item['color'])
         assert len(frequencies) > 0, f'pos: {pos}, values: {values}, keys: {[legend_item["key"] for legend_item in semantic["legend"]]}'
         fig = plt.figure()

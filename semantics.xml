@@ -6,7 +6,12 @@
         <item key="4" color="#faa">Bad</item>
         <item key="5" color="#f00">Very bad</item>
     </chart>
-    <chart fields="4,7" />
+    <chart fields="4,7">
+        <translate from="Mostly in groups of two students">Groups of 2</translate>
+        <translate from="Mostly in groups of three students">Groups of 3</translate>
+        <translate from="Mostly in groups of four students">Groups of 4</translate>
+        <translate from="Mostly in groups of five or more students">Groups of ≥5</translate>
+    </chart>
     <chart fields="6">
         <item key="1" color="#0f0">Enough support</item>
         <item key="2" color="#afa">Mostly enough</item>
