@@ -1,39 +1,9 @@
-<slides title="MoBi FS5 Python Course WS 23/24">
+<slides title="csv2slides Example">
     <slide><![CDATA[
         <h5>$title</h5>
         <p><b>Feedback participants:</b> $rows</p>
-        <p><b>Supervisors:</b>
-            Kerem,
-            Janis,
-            Ran,
-            Moritz,
-            Renpeng,
-            Leonid
-        </p>
         <p><b>Export:</b> <a href="$rawdata_url" target="_blank">raw data</a>, <a href="?print-pdf">pdf</a></p>
     ]]></slide>
-    <slide-sequence fields="2" />
-
-    <topic>Datacamp</topic>
-    <slide-sequence fields="3-5" />
-
-    <topic>Week 2 in Genereal</topic>
-    <slide-sequence fields="6-7" />
-    <slide field="8" values="1" />
-    <slide field="8" values="2-" offset="+1" />
-
-    <topic>Lab Session 1</topic>
-    <slide-sequence fields="9-12" />
-
-    <topic>Lab Session 2</topic>
-    <slide-sequence fields="13-16" />
-
-    <topic>Lab Session 3</topic>
-    <slide-sequence fields="17-19" />
-
-    <topic>Lab Session 4</topic>
-    <slide-sequence fields="20-25" />
-
-    <topic intro-slide="false">Final Thoughts</topic>
-    <slide-sequence fields="26-" />
+    <topic>Feedback</topic>
+    <slide-sequence fields="1-2" />
 </slides>
