@@ -5,6 +5,7 @@ import os
 import argparse
 import csv
 import re
+import base64
 from xml.dom import minidom
 
 import matplotlib
@@ -115,16 +116,19 @@ class Data:
 
 class Slides:
 
-    def __init__(self, data, slides_filepath):
+    def __init__(self, data, csv_filepath, slides_filepath):
         self.data = data
         slides_dom = minidom.parse(slides_filepath).getElementsByTagName('slides')[0]
         self.slides = list()
         current_topic = ''
+        with open(csv_filepath) as fin:
+            csv_rawdata = fin.read()
         for element in slides_dom.childNodes:
             if isinstance(element, minidom.Text): continue
             if element.tagName == 'slide':
                 slide_template = string.Template(element.firstChild.data)
-                self.slides.append({'type': 'raw', 'content': slide_template.substitute(dict(rows=len(data.rows)))})
+                rawdata_url = 'data:text/csv;base64,' + base64.b64encode(bytes(csv_rawdata, 'utf-8')).decode('utf-8')
+                self.slides.append({'type': 'raw', 'content': slide_template.substitute(dict(rows=len(data.rows), rawdata_url=rawdata_url))})
             elif element.tagName == 'slide-sequence':
                 for field in get_fields(element.attributes['fields'].value, len(self.data)):
                     if len(data.get_field_values(field)) == 0: continue
@@ -154,7 +158,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     data = Data(args.csv_input, args.semantics)
-    slides = Slides(data, args.slides)
+    slides = Slides(data, args.csv_input, args.slides)
     
     with open('template.html') as fin:
         template = string.Template(fin.read())
