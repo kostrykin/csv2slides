@@ -13,18 +13,24 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
-def get_fields(fields_str, last_field=None):
+def parse_range(fields_str, last_pos=None):
     fields = list()
     for token in fields_str.split(','):
         if '-' in token:
             subtokens = token.split('-')
             assert len(subtokens) == 2
-            for pos in range(int(subtokens[0]), int(subtokens[1]) + 1 if len(subtokens[1]) > 0 else last_field):
-                fields.append(pos)
+            for pos in range(int(subtokens[0]), 1 + (int(subtokens[1]) if len(subtokens[1]) > 0 else last_pos)):
+                fields.append(pos - 1)
         else:
-            fields.append(int(token))
+            fields.append(int(token) - 1)
     assert len(frozenset(fields)) == len(fields), 'Fields contain duplicates'
     return list(sorted(fields))
+
+
+assert parse_range('2-5') == [1, 2, 3, 4]
+assert parse_range('2,4') == [1, 3]
+assert parse_range('2-4,6') == [1, 2, 3, 5]
+assert parse_range('2-', 3) == [1, 2]
 
 
 class Data:
@@ -38,7 +44,7 @@ class Data:
             legend = list()
             for item in chart_semantic.getElementsByTagName('item'):
                 legend.append({'key': item.attributes['key'].value, 'label': item.firstChild.data, 'color': item.attributes['color'].value})
-            for pos in get_fields(chart_semantic.attributes['fields'].value):
+            for pos in parse_range(chart_semantic.attributes['fields'].value):
                 assert pos not in self.semantics, f'Duplicate semantics for field {pos}'
                 self.semantics[pos] = {'type': 'chart', 'legend': legend}
 
@@ -66,7 +72,7 @@ class Data:
         return [field_type(row[pos]) for row in self.rows[1:] if len(row[pos]) > 0]
 
     def get_field_semantic(self, pos):
-        semantic = self.semantics[pos + 1] if pos + 1 in self.semantics else None
+        semantic = self.semantics.get(pos, None)
         if (semantic is None and self.get_field_type(pos) is int) or (semantic is not None and semantic['type'] == 'chart' and len(semantic.get('legend', [])) == 0):
             values = list(frozenset(self.get_field_values(pos)))
             colors = [('#dfdfdf' if value_idx % 2 == 0 else '#efefef') for value_idx, _ in enumerate(values)]
@@ -77,13 +83,19 @@ class Data:
         else:
             return {'type': 'text'}
 
-    def render_html(self, pos, topic):
+    def render_html(self, pos, topic, which_values='all', offset=0):
         semantic = self.get_field_semantic(pos)
         values = self.get_field_values(pos)
+        if which_values == 'all':
+            which_values = list(range(len(values)))
+        else:
+            assert semantic['type'] == 'text', semantic['type']
+            which_values = parse_range(which_values, len(values))
         if semantic['type'] == 'chart':
             content = f'<img src="chart{pos}.svg">'
         elif semantic['type'] == 'text':
-            content = '<ol>' + ''.join([f'<li>{str(value)}</li>' for value in values if len(str(value)) > 0]) + '</ol>'
+            nonempty_values = [value for value in values if len(str(value)) > 0]
+            content = f'<p><b>{len(values)} answer(s)</b></p>' + f'<ol start="{1 + offset}">' + ''.join([f'<li>{str(value)}</li>' for value_idx, value in enumerate(nonempty_values) if value_idx in which_values]) + '</ol>'
         else:
             raise ValueError(f'unknown semantic: {semantic["type"]}')
         return f"""
@@ -123,12 +135,20 @@ class Slides:
         self.slides = list()
         current_topic = ''
         for element in slides_dom.childNodes:
-            if isinstance(element, minidom.Text): continue
+            if not isinstance(element, minidom.Element): continue
             if element.tagName == 'slide':
-                slide_template = string.Template(element.firstChild.data)
-                self.slides.append({'type': 'raw', 'content': slide_template.substitute(dict(title=self.title, rows=len(data.rows), rawdata_url=csv_raw))})
+                if element.firstChild is not None:
+                    slide_template = string.Template(element.firstChild.data)
+                    self.slides.append({'type': 'raw', 'content': slide_template.substitute(dict(title=self.title, rows=len(data.rows), rawdata_url=csv_raw))})
+                else:
+                    slide = {'type': 'field', 'field': int(element.attributes['field'].value) - 1, 'topic': current_topic}
+                    if 'values' in element.attributes:
+                        slide['values'] = element.attributes['values'].value
+                    if 'offset' in element.attributes:
+                        slide['offset'] = int(element.attributes['offset'].value)
+                    self.slides.append(slide)
             elif element.tagName == 'slide-sequence':
-                for field in get_fields(element.attributes['fields'].value, len(self.data)):
+                for field in parse_range(element.attributes['fields'].value, len(self.data)):
                     if len(data.get_field_values(field)) == 0: continue
                     self.slides.append({'type': 'field', 'field': field, 'topic': current_topic})
             elif element.tagName == 'topic':
@@ -142,7 +162,7 @@ class Slides:
             if slide['type'] == 'raw':
                 slides_html_list.append(f'<section>{slide["content"]}</section>')
             elif slide['type'] == 'field':
-                slides_html_list.append('<section>' + self.data.render_html(slide['field'], slide['topic']) + '</section>')
+                slides_html_list.append('<section>' + self.data.render_html(slide['field'], slide['topic'], slide.get('values', 'all'), slide.get('offset', 0)) + '</section>')
         return '\n'.join(slides_html_list)
 
 

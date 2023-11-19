@@ -12,23 +12,28 @@
         </p>
         <p><b>Export:</b> <a href="$rawdata_url" target="_blank">raw data</a>, <a href="?print-pdf">pdf</a></p>
     ]]></slide>
-    <slide-sequence fields="1" />
+    <slide-sequence fields="2" />
 
     <topic>Datacamp</topic>
-    <slide-sequence fields="2-4" />
+    <slide-sequence fields="3-5" />
+
+    <topic>Week 2 in Genereal</topic>
+    <slide-sequence fields="6-7" />
+    <slide field="8" values="1" />
+    <slide field="8" values="2-" offset="+1" />
 
     <topic>Lab Session 1</topic>
-    <slide-sequence fields="5-11" />
+    <slide-sequence fields="9-12" />
 
     <topic>Lab Session 2</topic>
-    <slide-sequence fields="12-15" />
+    <slide-sequence fields="13-16" />
 
     <topic>Lab Session 3</topic>
-    <slide-sequence fields="16-18" />
+    <slide-sequence fields="17-19" />
 
     <topic>Lab Session 4</topic>
-    <slide-sequence fields="19-24" />
+    <slide-sequence fields="20-25" />
 
-    <topic intro-slide="false">Final thoughts</topic>
-    <slide-sequence fields="25-" />
+    <topic intro-slide="false">Final Thoughts</topic>
+    <slide-sequence fields="26-" />
 </slides>
