@@ -2,7 +2,7 @@
 
 Converts your CSV, such as the feedback data from Google Forms, into visually pleasing slides (html).
 
-Ppowered by [reveal.js](https://revealjs.com).
+Powered by [reveal.js](https://revealjs.com).
 
-Push to `branch` to build and deploy under `/branch` of the GitHub pages of this repository.
+Push to any `branch` to build and deploy under <https://kostrykin.github.io/csv2slides/>`branch`.
 
