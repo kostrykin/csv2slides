@@ -1,0 +1,33 @@
+<slides>
+    <slide><![CDATA[
+        <h5>MoBi FS5 Python Course WS 23/24</h5>
+        <p><b>Feedback participants:</b> $rows</p>
+        <p><b>Supervisors:</b>
+            Kerem,
+            Janis,
+            Ran,
+            Moritz,
+            Renpeng,
+            Leonid
+        </p>
+    ]]></slide>
+    <slide-sequence fields="1" />
+
+    <topic>Datacamp</topic>
+    <slide-sequence fields="2-4" />
+
+    <topic>Lab Session 1</topic>
+    <slide-sequence fields="5-11" />
+
+    <topic>Lab Session 2</topic>
+    <slide-sequence fields="12-15" />
+
+    <topic>Lab Session 3</topic>
+    <slide-sequence fields="16-18" />
+
+    <topic>Lab Session 4</topic>
+    <slide-sequence fields="19-24" />
+
+    <topic intro-slide="false">Final thoughts</topic>
+    <slide-sequence fields="25-" />
+</slides>

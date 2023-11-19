@@ -12,13 +12,13 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
-def get_fields(fields_str):
+def get_fields(fields_str, last_field=None):
     fields = list()
     for token in fields_str.split(','):
         if '-' in token:
             subtokens = token.split('-')
             assert len(subtokens) == 2
-            for pos in range(int(subtokens[0]), int(subtokens[1]) + 1):
+            for pos in range(int(subtokens[0]), int(subtokens[1]) + 1 if len(subtokens[1]) > 0 else last_field):
                 fields.append(pos)
         else:
             fields.append(int(token))
@@ -32,12 +32,7 @@ class Data:
         with open(csv_filepath) as fin:
             self.rows = [row for row in csv.reader(fin)]
         self.semantics = dict()
-        self.topics = dict()
         semantics = minidom.parse(semantics_filepath).getElementsByTagName('semantics')[0]
-        for skip_semantic in semantics.getElementsByTagName('skip'):
-            for pos in get_fields(skip_semantic.attributes['fields'].value):
-                assert pos not in self.semantics, f'Duplicate semantics for field {pos}'
-                self.semantics[pos] = {'type': 'skip'}
         for chart_semantic in semantics.getElementsByTagName('chart'):
             legend = list()
             for item in chart_semantic.getElementsByTagName('item'):
@@ -45,11 +40,6 @@ class Data:
             for pos in get_fields(chart_semantic.attributes['fields'].value):
                 assert pos not in self.semantics, f'Duplicate semantics for field {pos}'
                 self.semantics[pos] = {'type': 'chart', 'legend': legend}
-
-        for topic in semantics.getElementsByTagName('topic'):
-            for pos in get_fields(topic.attributes['fields'].value):
-                assert pos not in self.topics, f'Duplicate topics for field {pos}'
-                self.topics[pos] = topic.firstChild.data
 
     def __len__(self):
         return len(self.rows[0])
@@ -86,10 +76,8 @@ class Data:
         else:
             return {'type': 'text'}
 
-    def render_html(self, pos):
+    def render_html(self, pos, topic):
         semantic = self.get_field_semantic(pos)
-        if semantic['type'] == 'skip':
-            return ''
         values = self.get_field_values(pos)
         if semantic['type'] == 'chart':
             content = f'<img src="chart{pos}.svg">'
@@ -98,11 +86,9 @@ class Data:
         else:
             raise ValueError(f'unknown semantic: {semantic["type"]}')
         return f"""
-            <section>
-                <h6>{self.topics.get(pos, '')}</h6>
+                <h6>{topic}</h6>
                 <p class="field_title">{self.get_field_title(pos)}</p>
                 {content}
-            </section>
             """
 
     def render_chart(self, pos, semantic):
@@ -127,21 +113,52 @@ class Data:
                 self.render_chart(pos, semantic)
 
 
+class Slides:
+
+    def __init__(self, data, slides_filepath):
+        self.data = data
+        slides_dom = minidom.parse(slides_filepath).getElementsByTagName('slides')[0]
+        self.slides = list()
+        current_topic = ''
+        for element in slides_dom.childNodes:
+            if isinstance(element, minidom.Text): continue
+            if element.tagName == 'slide':
+                slide_template = string.Template(element.firstChild.data)
+                self.slides.append({'type': 'raw', 'content': slide_template.substitute(dict(rows=len(data.rows)))})
+            elif element.tagName == 'slide-sequence':
+                for field in get_fields(element.attributes['fields'].value, len(self.data)):
+                    if len(data.get_field_values(field)) == 0: continue
+                    self.slides.append({'type': 'field', 'field': field, 'topic': current_topic})
+            elif element.tagName == 'topic':
+                current_topic = '' if element.firstChild is None else element.firstChild.data
+                if len(current_topic) > 0 and (not element.hasAttribute('intro-slide') or element.attributes['intro-slide'].value != 'false'):
+                    self.slides.append({'type': 'raw', 'content': f'<h1>{current_topic}</h1>'})
+
+    def render_html(self):
+        slides_html_list = list()
+        for slide in self.slides:
+            if slide['type'] == 'raw':
+                slides_html_list.append(f'<section>{slide["content"]}</section>')
+            elif slide['type'] == 'field':
+                slides_html_list.append('<section>' + self.data.render_html(slide['field'], slide['topic']) + '</section>')
+        return '\n'.join(slides_html_list)
+
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('build_directory', type=str)
     parser.add_argument('--csv_input', type=str, default='data.csv')
     parser.add_argument('--semantics', type=str, default='semantics.xml')
+    parser.add_argument('--slides', type=str, default='slides.xml')
     args = parser.parse_args()
     
     data = Data(args.csv_input, args.semantics)
-
-    slides_html = '\n'.join([data.render_html(pos) for pos in range(len(data))])
+    slides = Slides(data, args.slides)
     
     with open('template.html') as fin:
         template = string.Template(fin.read())
-    index_html = template.substitute(dict(slides_html=slides_html))
+    index_html = template.substitute(dict(slides_html=slides.render_html()))
     
     print(f'Building into: {args.build_directory}')
     os.chdir(args.build_directory)
