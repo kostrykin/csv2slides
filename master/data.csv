@@ -1,33 +1,4 @@
-"Zeitstempel","How was your impression of the course organization? (first + second week)","Have you received enough support during the first week?","During the first week, have you mostly worked alone or in groups?","Do you have any general criticism or suggestions regarding the organization or the content of the first week?","Have you received enough support in Discord during the second week?","During the second week, have you mostly worked alone or in groups?","For you personally, what was the greatest challenge during the second week? For example, were there any specific problems which you ran into very often?","In your opinion, how interesting/relevant was Lab Session 1?","How difficult was Task 1? (Intensity thresholding and Dice coefficient)","Please only answer this question if you tried the Bonus Task 2 (Sobel filter). How difficult was it?","Please only answer if you chose ""too difficult"" for one of the questions above. For you personally, what was the greatest challenge?","In your opinion, how interesting/relevant was Lab Session 2?","How difficult was Task 1? (Otsu thresholding)","How difficult was Task 2? (Batch processing)","Please only answer if you chose ""too difficult"" for one of the questions above. For you personally, what was the greatest challenge?","In your opinion, how interesting/relevant was Lab Session 3?","How difficult was the task?","Please only answer if you chose ""too difficult"" for the questions above. For you personally, what was the greatest challenge?","In your opinion, how interesting/relevant was Lab Session 4?","How difficult was the task?","Please only answer if you chose ""too difficult"" for the questions above. For you personally, what was the greatest challenge?","In your opinion, how interesting/relevant was the bonus task?","How difficult was the task? (Patch-based segmentation)","Please only answer if you chose ""too difficult"" for one of the questions above. For you personally, what was the greatest challenge?","Do you have any general criticism or suggestions regarding the organization or the content of the second week, or the course as a whole?"
-"2023/11/17 1:38:19 PM MEZ","2","1","Mostly alone","","2","Mostly in groups of two students","","4","2","4","","2","3","3","","2","3","","3","4","","","","",""
-"2023/11/17 2:42:06 PM MEZ","4","3","Mostly alone","- Collective Introduction for the 2nd week (Some groups did not have an introduction and did receive information very late. I think it would be least stressful for everyone to do an introduction for everyone together. Especially for explaining how the exam will be structured or composed (e.g. the herrmann group had an exercise sheet in week 1; if week 1 is relevant for the exam, should everyone do that sheet?)
-
-Otherwise, DataCamp is fine :)","3","Mostly in groups of three students","Transition from DataCamp to Image Analysis
-
-1. The difference between the DataCamp exercises and the Image Analysis exercises were a bit too difficult in the beginning for me. It felt somewhat of being baby-d in DataCamp and thrown down into stormy waters in the sea next.
-
-We just did Beginner's exercises in DataCamp and having a transition sheet would have been great (something that's similar to DataCamp exercises). 
-
-2. Figuring out the code all by yourself is pretty difficult when you have close to zero experience with python.
-It would  be nice if the exercises first showed you a functional code and what it does (similar to a solution/introduction that DataCamp Provides before the exercises) and then lets you repeat it with different values or a different picture. 
-
-I do like that we apply python to do image analysis and dont just stick to theroetical stuff, but as mentioned before a transition would have been really nice. 
-
-3. Generally I feel it is problematic that every student is in one out of three groups that each have different exercises. It would be nice if we could either rotate through groups 1-3, so everyone did something of every group, or if we could at least do the same exercises...
-
-
-","3","3","4","","3","4","4","","3","4","","3","4","","","","","1. The Feedback I gave before about the transitioning
-
-2. Maybe give the students an evaluation link on the beginning of each day? 
-Because there's usually issues during the coding that you will have forgotten after a few days. 
-
-That's all that came to my mind :)
-
-"
-"2023/11/17 3:00:31 PM MEZ","2","1","Mostly in groups of two students","","3","Mostly in groups of two students","","2","2","2","","3","4","3","","4","3","","4","3","","2","2","",""
-"2023/11/17 3:03:34 PM MEZ","3","1","Mostly alone","","3","Mostly alone","","5","3","","","5","3","4","","5","5","","5","5","","5","5","",""
-"2023/11/17 3:34:55 PM MEZ","2","1","Mostly in groups of two students","","1","Mostly in groups of two students","","2","2","3","","2","4","3","","2","3","","3","4","","2","4","",""
-"2023/11/17 4:00:18 PM MEZ","1","3","Mostly alone","","1","Mostly in groups of two students","","2","1","2","","2","2","2","","5","3","","4","3","","2","4","",""
-"2023/11/17 4:01:01 PM MEZ","2","3","Mostly alone","It's mainly work one can and should do on his own. No support is necessary. Not much organisation is necessary either.","1","Mostly in groups of two students","Using the knowledge from the first week for the second was not very intuitive. I did not have the feeling that what I learned from datacamp really prepared me for the content of the second week. A lot had to be looked online on stack overflow to understand the idea/application of certain functions and wasn't directly transferrable from knowledge gained before.","3","2","3","","2","2","2","","1","2","","3","3","","","","","The second week was all in all good. The tutors were very knowledgeable and helpful, knowing how to aid without revealing the whole solution to the tasks. I think the lab course is too short to really learn enough. I believe between the first week of data camp and the second week of image analysis there could be a few days in between, or even a whole week to learn how to develop or apply ideas without help."
-"2023/11/18 3:51:52 PM MEZ","1","1","Mostly alone","Maybe more communication concerning the exam, and whether attendance is required","1","Mostly in groups of two students","Most times it was difficult to take the first steps of a new task, because we did not know where to start. The sobel filter task for example was quite hard at first, because we did not know the right commands at first. But we were used to this, because of the project last year, so we succeeded :)
-And maybe give us the results so we can check. I do not mean the code, just the images. We checked with our classmates, but were not sure every time whether it was correct. ","1","3","3","","1","3","3","","1","3","","1","2","","1","3","","nope"
+"How did you enjoy the course?","Have you any comments?"
+"1","The course was great!"
+"2",""
+"2",""
