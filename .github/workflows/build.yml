@@ -22,17 +22,11 @@ jobs:
       - name: Build
         run: mkdir -p build/${{ github.ref_name }} && python build_slides.py build/${{ github.ref_name }} && rm -rf build/${{ github.ref_name }}/.git
 
-#      - name: Upload build artifact
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: ${{ github.ref_name }}
-#          path: build/*
-
       - name: Upload build artifact
         uses: actions/upload-pages-artifact@v1
         with:
           name: ${{ github.ref_name }}
-          path: build/${{ github.ref_name }}
+          path: build
 
   deploy:
     needs: build
