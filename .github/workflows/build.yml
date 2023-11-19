@@ -22,8 +22,14 @@ jobs:
       - name: Build
         run: mkdir build && python build_slides.py build && rm -rf build/.git
 
+#      - name: Upload build artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: ${{ github.ref_name }}
+#          path: build/*
+
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-pages-artifact@v1
         with:
           name: ${{ github.ref_name }}
           path: build/*
