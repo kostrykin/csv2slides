@@ -18,10 +18,7 @@ jobs:
         run: sudo apt-get install -y python3-matplotlib
 
       - name: Build
-        run: mkdir build && python build_slides.py build
-
-      - name: Cleanup
-        run: rm -rf build/.*
+        run: mkdir build && python build_slides.py build && rm -rf build/.git
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
