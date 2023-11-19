@@ -1,6 +1,6 @@
-<slides>
+<slides title="MoBi FS5 Python Course WS 23/24">
     <slide><![CDATA[
-        <h5>MoBi FS5 Python Course WS 23/24</h5>
+        <h5>$title</h5>
         <p><b>Feedback participants:</b> $rows</p>
         <p><b>Supervisors:</b>
             Kerem,
@@ -10,7 +10,7 @@
             Renpeng,
             Leonid
         </p>
-        <p><b>Raw data:</b> <a href="$rawdata_url" target="_blank">download</a></p>
+        <p><b>Export:</b> <a href="$rawdata_url" target="_blank">raw data</a>, <a href="?print-pdf">pdf</a></p>
     ]]></slide>
     <slide-sequence fields="1" />
 

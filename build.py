@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 import string
-import os
+import os, os.path
+import shutil
 import argparse
 import csv
 import re
-import base64
 from xml.dom import minidom
 
 import matplotlib
@@ -116,19 +116,17 @@ class Data:
 
 class Slides:
 
-    def __init__(self, data, csv_filepath, slides_filepath):
+    def __init__(self, data, slides_filepath, csv_raw):
         self.data = data
         slides_dom = minidom.parse(slides_filepath).getElementsByTagName('slides')[0]
+        self.title = slides_dom.attributes['title'].value
         self.slides = list()
         current_topic = ''
-        with open(csv_filepath) as fin:
-            csv_rawdata = fin.read()
         for element in slides_dom.childNodes:
             if isinstance(element, minidom.Text): continue
             if element.tagName == 'slide':
                 slide_template = string.Template(element.firstChild.data)
-                rawdata_url = 'data:text/csv;base64,' + base64.b64encode(bytes(csv_rawdata, 'utf-8')).decode('utf-8')
-                self.slides.append({'type': 'raw', 'content': slide_template.substitute(dict(rows=len(data.rows), rawdata_url=rawdata_url))})
+                self.slides.append({'type': 'raw', 'content': slide_template.substitute(dict(title=self.title, rows=len(data.rows), rawdata_url=csv_raw))})
             elif element.tagName == 'slide-sequence':
                 for field in get_fields(element.attributes['fields'].value, len(self.data)):
                     if len(data.get_field_values(field)) == 0: continue
@@ -153,18 +151,20 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('build_directory', type=str)
     parser.add_argument('--csv_input', type=str, default='data.csv')
+    parser.add_argument('--csv_raw', type=str, default='data.csv', help='Name of the file used to deploy the raw CSV data.')
     parser.add_argument('--semantics', type=str, default='semantics.xml')
     parser.add_argument('--slides', type=str, default='slides.xml')
     args = parser.parse_args()
     
     data = Data(args.csv_input, args.semantics)
-    slides = Slides(data, args.csv_input, args.slides)
+    slides = Slides(data, args.slides, args.csv_raw)
     
     with open('template.html') as fin:
         template = string.Template(fin.read())
-    index_html = template.substitute(dict(slides_html=slides.render_html()))
+    index_html = template.substitute(dict(title=slides.title, slides_html=slides.render_html()))
     
     print(f'Building into: {args.build_directory}')
+    shutil.copy(args.csv_input, os.path.join(args.build_directory, args.csv_raw))
     os.chdir(args.build_directory)
     
     os.system('git init')
