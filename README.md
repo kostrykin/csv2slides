@@ -1,4 +1,4 @@
-# [csv2slides](#csv2slides)
+# [*csv2slides*](#csv2slides)
 
 **Convert your CSV,** such as the feedback data from Google Forms, **to visually pleasing HTML slides.**
 
