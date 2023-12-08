@@ -32,7 +32,10 @@
     <slide-sequence fields="17-19" />
 
     <topic>Lab Session 4</topic>
-    <slide-sequence fields="20-25" />
+    <slide-sequence fields="20-23" />
+
+    <topic>Bonus Tasks</topic>
+    <slide-sequence fields="24-25" />
 
     <topic intro-slide="false">Final Thoughts</topic>
     <slide-sequence fields="26-" />
