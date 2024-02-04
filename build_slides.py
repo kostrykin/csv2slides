@@ -79,7 +79,7 @@ class Data:
             values = list(frozenset(self.get_field_values(pos)))
             colors = [('#dfdfdf' if value_idx % 2 == 0 else '#efefef') for value_idx, _ in enumerate(values)]
             if len(colors) % 2 == 1: colors[-1] = '#cfcfcf'
-            return {'type': 'chart', 'legend': [{'key': value, 'label': str(value), 'color': color} for value, color in zip(values, colors)], 'explicit-legend': False, 'translations': semantic.get('translations', dict())}
+            return {'type': 'chart', 'legend': [{'key': value, 'label': str(value), 'color': color} for value, color in zip(values, colors)], 'explicit-legend': False, 'translations': dict() if semantic is None else semantic.get('translations', dict())}
         elif semantic is not None:
             return semantic
         else:
