@@ -1,9 +1,50 @@
 <semantics>
-    <chart fields="1">
+    <chart fields="2">
         <item key="1" color="#0f0">Very good</item>
         <item key="2" color="#afa">Good</item>
         <item key="3" color="#ffa">Undecided</item>
         <item key="4" color="#faa">Bad</item>
         <item key="5" color="#f00">Very bad</item>
+    </chart>
+    <chart fields="3">
+        <item key="1" color="#0f0">Very smooth</item>
+        <item key="2" color="#afa">Mostly smooth</item>
+        <item key="3" color="#ffa">Undecided</item>
+        <item key="4" color="#faa">Didn't like it</item>
+        <item key="5" color="#f00">Didn't like it at all</item>
+    </chart>
+    <chart fields="4">
+        <item key="1" color="#0f0">Enough support</item>
+        <item key="2" color="#afa">Mostly enough</item>
+        <item key="3" color="#ffa">Undecided</item>
+        <item key="4" color="#faa">Mostly insufficient</item>
+        <item key="5" color="#f00">Insufficient support</item>
+    </chart>
+    <chart fields="5">
+        <translate from="Mostly in groups of two students">Groups of 2</translate>
+        <translate from="Mostly in groups of three students">Groups of 3</translate>
+        <translate from="Mostly in groups of four students">Groups of 4</translate>
+        <translate from="Mostly in groups of five or more students">Groups of ≥5</translate>
+    </chart>
+    <chart fields="7">
+        <item key="1" color="#0f0">Very helpful</item>
+        <item key="2" color="#afa">Helpful</item>
+        <item key="3" color="#ffa">Undecided</item>
+        <item key="4" color="#faa">Irrelevant</item>
+        <item key="5" color="#f00">Very irrelevant</item>
+    </chart>
+    <chart fields="8,11,12,13,14,17,18,19,20,23,24,25">
+        <item key="1" color="#ffa">Too easy</item>
+        <item key="2" color="#afa">Easy</item>
+        <item key="3" color="#0f0">About right</item>
+        <item key="4" color="#faa">Difficult</item>
+        <item key="5" color="#f00">Too difficult</item>
+    </chart>
+    <chart fields="10,16,22">
+        <item key="1" color="#0f0">Very interesting</item>
+        <item key="2" color="#afa">Interesting</item>
+        <item key="3" color="#ffa">Undecided</item>
+        <item key="4" color="#faa">Irrelevant</item>
+        <item key="5" color="#f00">Very irrelevant</item>
     </chart>
 </semantics>

@@ -1,9 +1,31 @@
-<slides title="csv2slides Example">
+<slides title="MoBi FS3 Python Course WS 23/24">
     <slide><![CDATA[
         <h5>$title</h5>
         <p><b>Feedback participants:</b> $rows</p>
+        <p><b>Supervisors:</b>
+            Kerem,
+            Janis,
+            Ran,
+            Moritz,
+            Renpeng,
+            Leonid
+        </p>
         <p><b>Export:</b> <a href="$rawdata_url" target="_blank">raw data</a>, <a href="?print-pdf">pdf</a></p>
     ]]></slide>
-    <topic>Feedback</topic>
-    <slide-sequence fields="1-2" />
+    <slide-sequence fields="2-6" />
+
+    <topic>Lab Session 1</topic>
+    <slide-sequence fields="7-9" />
+
+    <topic>Lab Session 2</topic>
+    <slide-sequence fields="10-15" />
+
+    <topic>Lab Session 3</topic>
+    <slide-sequence fields="16-21" />
+
+    <topic>Lab Session 4</topic>
+    <slide-sequence fields="22-26" />
+
+    <topic intro-slide="false">Final Thoughts</topic>
+    <slide-sequence fields="27-" />
 </slides>
