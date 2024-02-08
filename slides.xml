@@ -17,7 +17,7 @@
     <topic>Datacamp</topic>
     <slide-sequence fields="3-5" />
 
-    <topic>Week 2 in Genereal</topic>
+    <topic>Week 2 in General</topic>
     <slide-sequence fields="6-7" />
     <slide field="8" values="1" />
     <slide field="8" values="2-" offset="+1" />
