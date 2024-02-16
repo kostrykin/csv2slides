@@ -29,13 +29,14 @@ jobs:
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
+        if: github.event_name == 'push'
         with:
           name: ${{ github.ref_name }}
           path: build
 
   deploy:
     needs: build
-    if: github.event_name == 'push' && ${{ !startsWith(github.ref_name, 'dependabot/') }}
+    if: github.event_name == 'push' && !startsWith(github.ref_name, 'dependabot/')
 
     permissions:
       contents: write
