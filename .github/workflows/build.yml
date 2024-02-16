@@ -8,10 +8,14 @@ on:
       - '*.xml'
       - '*.html'
       - '*.py'
+  pull_request:
+    branches:
+      - 'master'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || !startsWith(github.ref_name, 'dependabot/')
     steps:
 
       - name: Initialize
@@ -31,6 +35,7 @@ jobs:
 
   deploy:
     needs: build
+    if: github.event_name == 'push' && ${{ !startsWith(github.ref_name, 'dependabot/') }}
 
     permissions:
       contents: write
