@@ -28,7 +28,7 @@ jobs:
         run: mkdir build && python build_slides.py build && rm -rf build/.git
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: github.event_name == 'push'
         with:
           name: ${{ github.ref_name }}
