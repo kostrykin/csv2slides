@@ -17,9 +17,7 @@
     <slide-sequence fields="3-5" />
 
     <topic>Week 2 in General</topic>
-    <slide-sequence fields="6-7" />
-    <slide field="8" values="1" />
-    <slide field="8" values="2-" offset="+1" />
+    <slide-sequence fields="6-8" />
 
     <topic>Lab Session 1</topic>
     <slide-sequence fields="9-12" />
