@@ -12,10 +12,7 @@
         </p>
         <p><b>Export:</b> <a href="$rawdata_url" target="_blank">raw data</a>, <a href="?print-pdf">pdf</a></p>
     ]]></slide>
-    <slide-sequence fields="2-5" />
-    <slide field="6" values="1-6" />
-    <slide field="6" values="7-12" offset="+6" />
-    <slide field="6" values="13-" offset="+12" />
+    <slide-sequence fields="2-6" />
 
     <topic>Lab Session 1</topic>
     <slide-sequence fields="7-9" />
