@@ -8,14 +8,18 @@ on:
       - '*.xml'
       - '*.html'
       - '*.py'
+  pull_request:
+    branches:
+      - 'master'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || !startsWith(github.ref_name, 'dependabot/')
     steps:
 
       - name: Initialize
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install build dependencies
         run: sudo apt-get install -y python3-matplotlib
@@ -24,13 +28,15 @@ jobs:
         run: mkdir build && python build_slides.py build && rm -rf build/.git
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
+        if: github.event_name == 'push'
         with:
           name: ${{ github.ref_name }}
           path: build
 
   deploy:
     needs: build
+    if: github.event_name == 'push' && !startsWith(github.ref_name, 'dependabot/')
 
     permissions:
       contents: write
@@ -39,12 +45,12 @@ jobs:
     steps:
 
       - name: Initialize
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
 
       - name: Download build artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
 
       - name: Build deployment index
         run: python build_index.py
